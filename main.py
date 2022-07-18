@@ -1,5 +1,6 @@
 from tkinter import *
 import math
+from pygame import mixer
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -32,12 +33,18 @@ def start_timer():
     short_break_sec = SHORT_BREAK_MIN * 60
     long_break_sec = LONG_BREAK_MIN * 60
 
+    mixer.init()
+    sound = mixer.Sound("suspend-sound-113941.mp3")
+
+
     if reps % 8 == 0:
         countdown(long_break_sec)
         timer.config(text="Break", foreground=RED, background=YELLOW)
+        sound.play()
     elif reps % 2 == 0:
         countdown(short_break_sec)
         timer.config(text="Break", foreground=PINK, background=YELLOW)
+        sound.play()
     else:
         countdown(work_sec)
         timer.config(text="Work", foreground=GREEN, background=YELLOW)
@@ -64,19 +71,19 @@ window = Tk()
 window.title("Pomodoro")
 window.config(padx=100, pady=50, background=YELLOW)
 
-#label
+# label
 timer = Label(text="Timer", font=(FONT_NAME, 40, "bold"), foreground=GREEN, background=YELLOW)
 timer.grid(column=1, row=0)
 
-#start button
+# start button
 start = Button(text="start", command=start_timer)
 start.grid(column=0, row=2)
 
-#reset button
+# reset button
 reset = Button(text="reset", command=reset_timer)
 reset.grid(column=2, row=2)
 
-#green tick
+# green tick
 tick = Label(text="", foreground=GREEN, background=YELLOW, font=(FONT_NAME, 20))
 tick.grid(column=1, row=3)
 
